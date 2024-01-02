@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">]
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Joguinho</title>
+
+        <style>
+
+            #renderer {
+                border: 1px solid #ff0000;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <canvas id="renderer" width="600" height="400" class="border rounded"></canvas>
+
+
+        <script>
+
+            const canvas = document.getElementById('renderer')
+            const context = canvas.getContext('2d')
+
+
+           let gameObjects = {
+                players : [
+                    { x : 50, y : 50, t : 10},
+                    { x : 250, y : 10, t : 10},
+                    { x : 450, y : 340, t : 10}
+                    
+                ]
+
+            }
+
+
+            renderizar(gameObjects)
+
+
+            
+            function renderizar(objects) {
+
+                objects.players.forEach( player => {
+
+                    context.fillStyle = 'red'
+                    context.fillRect(player.x, player.y, player.t, player.t)
+                })
+            }
+
+            
+            
+
+
+        </script>
+
+        
+
+    </body>
+
+</html>
