@@ -3,7 +3,23 @@
 const canvas = document.getElementById('renderer')
 const context = canvas.getContext('2d')
 
-let gameObjects = {
+const movement = {
+    w : id => { 
+        gameObjects[id].y -= 10 
+    },
+    a : id => { 
+        gameObjects[id].x -= 10 
+    },
+    s : id => { 
+        gameObjects[id].y += 10 
+    },
+    d : id => { 
+        gameObjects[id].x += 10 
+    } 
+
+}
+
+const gameObjects = {
         'p1' : { x : 50, y : 50, t : 10},
         'p2' : { x : 250, y : 10, t : 10},
         'p3' : { x : 450, y : 340, t : 10}
@@ -13,6 +29,7 @@ let gameObjects = {
 //execução
 
 document.addEventListener('keydown', event => {
+    
     moveObject('p1', event.key)
 
 })
@@ -39,23 +56,10 @@ function render() {
 
 
 function moveObject(id, command) {
-    switch (command) {
-        case 'w':
-            gameObjects[id].y -= 10
-            break
-
-        case 'a':
-            gameObjects[id].x -= 10
-            break
-        
-        case 's':
-            gameObjects[id].y += 10
-            break
-
-        case 'd':
-            gameObjects[id].x += 10
-            break
-
+    let moveFunction = movement[command]
+    
+    if (moveFunction) {
+        moveFunction(id)
     }
 }
 
