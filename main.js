@@ -4,7 +4,7 @@ import express from 'express'
 import http from 'http'
 import { Server } from 'socket.io'
 
-import { moveObject } from './game.js'
+import { gameServer } from './gameServer.js'
 
 
 //variaveis
@@ -13,24 +13,31 @@ const app = express()
 const server = http.createServer(app)
 const io = new Server(server)
 
-const gameObjects = {
-    'p1' : { x : 50, y : 50, t : 10},
-    'p2' : { x : 250, y : 10, t : 10},
-    'p3' : { x : 450, y : 340, t : 10}
-    
-}
+const game = new gameServer()
 
 //execução
+
 
 app.use(express.static('public'))
 
 io.on('connection', (socket) => {
     console.log('a user connected with id: '+ socket.id);
-  });
+
+    game.addPlayer(socket.id)
+    socket.emit('start', game.objects)
+
+    socket.on('disconnect', () => {
+        console.log('a user disconnected with id: '+ socket.id);
+
+        game.removePlayer(socket.id)
+    });
+});
 
 
 
-console.log(gameObjects)
+
+
+
 
 
 

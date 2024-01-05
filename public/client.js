@@ -1,4 +1,4 @@
-import { render } from './game.js'
+import { gameClient } from './gameClient.js'
 
 
 //variaveis 
@@ -13,6 +13,7 @@ document.addEventListener('keydown', event => {
 
 })
 
+const game = new gameClient()
 
 const socket = io();
 
@@ -20,6 +21,11 @@ socket.on('connect', () => {
     console.log('conectado a id:' + socket.id)
 })
 
+socket.on('start', (objects) => {
+    game.objects = objects
+    console.log(game.objects)
+})
 
-//render(context, gameObjects)
+
+game.render(context)
 
