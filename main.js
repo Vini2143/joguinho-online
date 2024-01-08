@@ -4,16 +4,19 @@ import express from 'express'
 import http from 'http'
 import { Server } from 'socket.io'
 
-import { gameServer } from './gameServer.js'
+import { Game } from './public/game.js'
 
 
-//variaveis
+
+//variáveis
 
 const app = express()
 const server = http.createServer(app)
 const io = new Server(server)
 
-const game = new gameServer()
+const game = new Game()
+
+
 
 //execução
 
@@ -21,39 +24,30 @@ const game = new gameServer()
 app.use(express.static('public'))
 
 io.on('connection', (socket) => {
-    console.log('a user connected with id: '+ socket.id);
 
-    game.addPlayer(socket.id)
+    console.log(`a user with id '${socket.id}' was connected`);
     socket.emit('start', game.objects)
 
+    let player = game.addPlayer(socket.id)
+    io.emit('add', socket.id, player.color)
+    
+    socket.on('move', command => {
+
+        game.moveObject(socket.id, command)
+        io.emit('move', socket.id, command)
+    })
+
     socket.on('disconnect', () => {
-        console.log('a user disconnected with id: '+ socket.id);
+        console.log(`a user with id '${socket.id}' was disconnected`);
 
         game.removePlayer(socket.id)
+        io.emit('remove', socket.id)
     });
 });
 
 
-
-
-
-
-
-
-
-server.listen(3000, () => {
-    console.log('server rodando na porta: 3000')
+server.listen(8080, () => {
+    console.log('server is running...')
 })
-
-
-
-
-
-
-
-
-
-
-
 
 
