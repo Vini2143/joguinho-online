@@ -5,14 +5,6 @@ export class Game {
     constructor() {
         //variaveis
 
-        this.colors = [
-            '#FF0000',
-            '#FFFF00',
-            '#0097FF',
-            '#C0C0C0',
-            '#0CFF00'
-        ]
-
         this.objects = {}
 
         this.movements = {
@@ -45,10 +37,19 @@ export class Game {
     }
 
     addPlayer(id, color = false) {
+
+        let colors = [
+            '#FF0000',
+            '#FFFF00',
+            '#0097FF',
+            '#C0C0C0',
+            '#0CFF00'
+        ]
+
         this.objects[id] = { 
             x : 55, 
             y : 55,
-            color: color ? color : this.colors[Math.floor(Math.random() * 5)]
+            color: color ? color : colors[Math.floor(Math.random() * 5)]
         }
 
         return this.objects[id]

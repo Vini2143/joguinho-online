@@ -25,7 +25,7 @@ app.use(express.static('public'))
 
 io.on('connection', (socket) => {
 
-    console.log(`a user with id '${socket.id}' was connected`);
+    console.log(socket)//`a user with id '${socket.id}' was connected`)
     socket.emit('start', game.objects)
 
     let player = game.addPlayer(socket.id)
@@ -38,7 +38,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('disconnect', () => {
-        console.log(`a user with id '${socket.id}' was disconnected`);
+        console.log(`a user with id '${socket.id}' was disconnected`)
 
         game.removePlayer(socket.id)
         io.emit('remove', socket.id)
