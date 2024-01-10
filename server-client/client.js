@@ -1,13 +1,24 @@
-import { WebSocket } from 'ws'
+import { emitEvent } from './functions.js'
+import { receiveEvent } from './functions.js'
 
 const ws = new WebSocket('ws://localhost:8080');
 
-ws.on('error', console.error);
+ws.onerror = function (error) { 
+  console.log(error) 
+}
 
-ws.on('open', function open() {
-  ws.send('something');
-});
+ws.onopen = function () {
 
-ws.on('message', function message(data) {
-  console.log( data)
-})
+  ws.send(emitEvent('test', 'anything'))
+  
+}
+
+
+ws.onmessage = function (message) {
+
+  receiveEvent(message.data, 'start', data => {
+    console.log(data)
+  })
+  
+}
+
