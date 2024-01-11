@@ -1,10 +1,10 @@
+
+
 export class Game {
 
-
-    //variaveis
-
     constructor() {
-        
+        //variaveis
+
         this.objects = {}
 
         this.movements = {
@@ -59,6 +59,8 @@ export class Game {
     removePlayer(id) {
         delete this.objects[id]
     }
+
+    
 
     
     render(context) {

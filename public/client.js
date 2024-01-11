@@ -1,16 +1,17 @@
 import { Game } from './game.js'
 
 
-//variaveis 
+//variaveis
+
 const canvas = document.getElementById('renderer')
 const context = canvas.getContext('2d')
 
-
-//execução
+const socket = io();
 
 const game = new Game()
 
-const socket = io();
+
+//execução
 
 socket.on('connect', () => {
     console.log(`connected as '${socket.id}'`)
@@ -44,7 +45,6 @@ document.addEventListener('keydown', event => {
     socket.emit('move', event.key)
 
 })
-
 
 game.render(context, socket.id)
 

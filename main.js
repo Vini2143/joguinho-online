@@ -7,7 +7,6 @@ import { Server } from 'socket.io'
 import { Game } from './public/game.js'
 
 
-
 //variáveis
 
 const app = express()
@@ -15,7 +14,6 @@ const server = http.createServer(app)
 const io = new Server(server)
 
 const game = new Game()
-
 
 
 //execução
