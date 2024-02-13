@@ -28,12 +28,9 @@ export class Game {
     //funções
 
     moveObject(id, command) {
-        let moveFunction = this.movements[command]
-        
-        if (moveFunction) {
+        const moveFunction = this.movements[command]
+        moveFunction?.(this.objects[id])
 
-            moveFunction(this.objects[id])
-        }
     }
 
     addPlayer(id, color = false) {
